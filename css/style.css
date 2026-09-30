@@ -16,6 +16,7 @@
    --color-night: #222833;
    --color-sun: #ffffff;
 
+
    /* Skriv selv: billedstørrelser (px)
       Opret to variabler her:
         --sun-size med værdien 100px  (solens bredde og højde)
@@ -23,6 +24,10 @@
       Variablerne bruges længere nede med var(--sun-size) og var(--car-w).
       Når siden virker: prøv at ændre værdierne. Hvad sker der?
    */
+   --sun-size: 100px;
+   --car-w: 200px;
+   --bus-w: 260px;
+   --truck-w:250px;
 
 }
 
@@ -49,13 +54,23 @@
          var(--color-sky-top), var(--color-sky-mid), var(--color-sky-bot)
 */
 
-
-
+.scene {
+   position: relative;
+   height: 100vh;
+   overflow: hidden;
+   background: linear-gradient (
+               var(--color-sky-top), 
+               var(--color-sky-mid), 
+               var(--color-sky-bot)
+   );
+}
 /* Skriv selv: nat-tilstand
    JavaScript tilføjer klassen "night" til .scene, når man klikker på solen.
    Skriv en regel for .scene.night, der sætter background til var(--color-night).
 */
-
+.scene.night {
+   background: var(--color-night);
+}
 
 
 /* ---------------------------------------------------------
@@ -118,7 +133,9 @@
 --------------------------------------------------------- */
 .car1,
 .car2,
-.car3 {
+.car3, 
+.bus, 
+.truck{
    position: absolute;
    width: var(--car-w);
    max-width: 28vw;
@@ -156,6 +173,11 @@
    animation: car2 12s linear infinite;
 }
 
+@keyframes car2 {
+   0%   { transform: translateX(0) rotateY(180deg); }
+   100% { transform: translateX(-130vw) rotateY(180deg); }
+}
+
 /* Skriv selv: @keyframes car2
    Brug car1 ovenfor som skabelon. Politibilen kører bare den modsatte vej.
 
@@ -179,6 +201,11 @@
    bottom: -3.4vh;
    left: -30vw; /* starter 30vw uden for skærmen til venstre */
    animation: car3 8s linear infinite;
+}
+
+@keyframes car3 {
+   0%   { transform: translateX(0) rotateY(180deg); }
+   100% { transform: translateX(130vw) rotateY(180deg); }
 }
 
 /* Skriv selv: @keyframes car3
@@ -223,6 +250,10 @@
      - opacity til 1
      - transform til translateY(0)
 */
+.tooltip.is-visible {
+   opacity: 1;
+   transform: translateY(0);
+}
 
 
 
@@ -232,17 +263,6 @@
    Lav først E1 og E2 i index.html, så billederne er på siden.
 ========================================================= */
 
-/* ---------------------------------------------------------
-   E3. Fælles regel for alle køretøjer
---------------------------------------------------------- */
-/* Skriv selv: find reglen "Biler - fælles" længere oppe (.car1, .car2, .car3).
-   Tilføj .bus og .truck til selector-listen, så de nye køretøjer får samme
-   position, bredde, z-index og cursor som bilerne.
-
-   Hint: selectorerne adskilles med komma.
-   Undersøg selv: hvorfor er det smartere end at skrive de samme
-   egenskaber igen i en ny regel?
-*/
 
 
 /* ---------------------------------------------------------
@@ -257,7 +277,13 @@
    Hint: den fælles regel har max-width: 28vw. Hvorfor er det vigtigt,
    at køretøjerne aldrig er bredere end 30vw? (Kig på regnestykket ved car1.)
 */
+.bus {
+  width: var(--bus-w);
+}
 
+.truck {
+  width: var(--truck-w);
+}
 
 /* ---------------------------------------------------------
    E5. Bus: højre → venstre
@@ -281,6 +307,16 @@
    Undersøg selv: hvad sker der, hvis du alligevel tilføjer den?
 */
 
+.bus {
+   right: -30vw;
+   width: var(--bus-w);
+   animation: bus 20s linear infinite;
+}
+
+@keyframes bus {
+   0% {transform: translateX(0) ; }
+   100% {transform: translateX(-130vw);}
+}
 
 
 /* ---------------------------------------------------------
@@ -301,7 +337,16 @@
    bruge rotateY(180deg) her.
 */
 
+.truck {
+   right: -30vw;
+   width: var(--bus-w);
+   animation: truck 14s linear infinite;
+}
 
+@keyframes truck {
+   0% {transform: translateX(0) ; }
+   100% {transform: translateX(-130vw);}
+}
 
 /* ---------------------------------------------------------
    Ekstra-ekstra (valgfrit)

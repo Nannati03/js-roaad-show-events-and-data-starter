@@ -1,16 +1,9 @@
+"use strict";
 // Husk fra dag 1: skriv "use strict" herunder
 
 
 
-/* ---------------------------------------------------------
-   1. DATA
---------------------------------------------------------- */
 
-// Nyt i dag: et array [ ] er en liste. Hvert element i listen er her et objekt { }.
-// Et objekt samler flere oplysninger om én ting som nøgle: værdi, fx brand: "Ford".
-// "id" skal passe med id'et på bilens <img> i HTML'en - det er sådan JS finder det rigtige billede.
-//
-// Eksempel: den første bil er skrevet for dig.
 const cars = [
     {
         id: "redCar",
@@ -19,23 +12,51 @@ const cars = [
         year: 1974,
         color: "Rød",
         fuel: "Benzin",
-        sound: "sound/red-car-horn.wav"
+        sound: "sound/red-car-horn.wav",
     },
+    {
+      id: "policeCar",
+      brand: "Volvo",
+      model: "242",
+      year: 1982,
+      color: "Blå og hvid",
+      fuel: "Diesel",
+      sound: "sound/police-car-sound.wav",
+    },
+    {
+      id: "blueCar",
+      brand: "Volkswagen",
+      model: "Passat",
+      year: 1979,
+      color: "Lyseblå",
+      fuel: "Diesel", 
+      sound: "sound/blue-car-sound.wav",
+    },
+    {
+      id: "bus",
+      brand: "Mercedes",
+      model: "Benz",
+      year: "2005",
+      color: "Gul og blå",
+      fuel: "Benzin",
+      sound: "sound/bus-sound.wav",
+    },
+    {
+      id: "truck",
+      brand: "Kia",
+      model: "??",
+      year: "2011",
+      color: "Gul og blå",
+      fuel: "Diesel",
+      sound: "sound/truck-sound.wav",
+    }
 
-    // Skriv selv: et objekt for politibilen med samme nøgler som ovenfor.
-    //   id: "policeCar", brand: "Volvo", model: "242", year: 1982,
-    //   color: "Politibil", fuel: "Diesel", sound: "sound/police-car-sound.wav"
-
-    // Skriv selv: et objekt for den blå bil.
-    //   id: "blueCar", brand: "Volkswagen", model: "Passat", year: 1979,
-    //   color: "Lyseblå", fuel: "Diesel", sound: "sound/blue-car-sound.wav"
-
-    // Husk komma mellem objekterne!
 ];
 
 // Test dit array: åbn konsollen i browseren (F12) og se, hvad der bliver skrevet ud.
 console.log(cars);
 console.log(cars[0].brand);
+console.log(cars[1].brand);
 
 // Nyt i dag: forEach gennemløber et array og kører koden én gang for hver bil.
 // Sådan er en forEach bygget op:
@@ -49,6 +70,9 @@ console.log(cars[0].brand);
 //
 // Ekstra: skriv også model og årgang ud på samme linje.
 
+cars.forEach(function(carObj) {
+   console.log(`${carObj.brand} - ${carObj.model} - ${carObj.year}`);
+})
 
 
 /* ---------------------------------------------------------
@@ -63,7 +87,8 @@ const getTooltip = document.getElementById("tooltip");
 //
 // Husk: class bruges til CSS (udseende), id bruges til JavaScript.
 
-
+const getSun = document.getElementById("sun");
+const getScene = document.getElementById("scene");
 
 /* ---------------------------------------------------------
    3. DAG OG NAT
@@ -75,6 +100,10 @@ const getTooltip = document.getElementById("tooltip");
 // og fjerner den, hvis den er der. Det er samme idé som din if/else i billedskift-opgaven,
 // men toggle klarer det på én linje. Selve udseendet står i CSS'en under .scene.night.
 
+getSun.addEventListener("click", function() 
+{
+   getScene.classList.toggle("night");
+});
 
 
 /* ---------------------------------------------------------
@@ -95,6 +124,8 @@ function showTooltip(car) {
     getTooltip.innerHTML = `
         <strong>${car.brand} ${car.model}</strong><br>
         Årgang: ${car.year}<br>
+        Farve: ${car.color}<br>
+        Brændstof ${car.fuel}
     `;
     // Skriv selv: tilføj to linjer mere inde i backticks ovenfor: farve (car.color) og brændstof (car.fuel).
 
@@ -110,7 +141,9 @@ function showTooltip(car) {
 
 // Skriv selv en funktion, der hedder hideTooltip.
 // Den skal fjerne klassen "is-visible" fra getTooltip. Brug classList.remove - det modsatte af classList.add.
-
+function hideTooltip () {
+   getTooltip.classList.remove("is-visible");
+}
 
 
 // Skriv selv en funktion, der hedder playSound, og som tager imod parameteren car.
@@ -127,6 +160,10 @@ function showTooltip(car) {
 // OBS: play er en metode, der følger med Audio. Kald den ikke playSound -
 // playSound er navnet på din egen funktion.
 
+function playSound(car) {
+const audio = new Audio(car.sound);
+audio.play();
+}
 
 
 /* ---------------------------------------------------------
@@ -148,6 +185,9 @@ cars.forEach(function(car) {
     });
 
     // Skriv selv: lyt efter "click" på getCarElem og kald playSound(car) inde i en anonym function.
+    getCarElem.addEventListener("click", function() {
+      playSound(car);
+    });
 
 });
 
@@ -156,27 +196,6 @@ cars.forEach(function(car) {
    Lav først E1-E2 i index.html og E3-E6 i style.css.
 ========================================================= */
 
-/* ---------------------------------------------------------
-   E7. Tilføj bussen til data
---------------------------------------------------------- */
-// Skriv selv: gå op til cars-arrayet i afsnit 1 og tilføj et nyt objekt for bussen.
-// Brug præcis de samme nøgler som de andre biler:
-//   id, brand, model, year, color, fuel, sound
-//
-// - id skal være "bus" (samme id som <img> i HTML'en)
-// - sound: find bussens lydfil i sound-mappen og skriv stien, fx "sound/filnavn.wav"
-// - brand, model, year, color og fuel: find selv på, eller søg på nettet
-//   efter en bus, der ligner billedet
-//
-// Hint: year er et tal, så det skal IKKE stå i anførselstegn.
-// Husk komma efter objektet før det nye!
-
-
-/* ---------------------------------------------------------
-   E8. Tilføj truck'en til data
---------------------------------------------------------- */
-// Skriv selv: gør det samme for truck'en med id "truck"
-// og stien til truck'ens lydfil i sound-mappen.
 
 
 /* ---------------------------------------------------------
